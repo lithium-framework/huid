@@ -1,0 +1,32 @@
+{
+  "name": "@lithium-framework/huid",
+  "version": "1.0.1-0",
+  "description": "",
+  "main": "dist/index.js",
+  "type": "module",
+  "module": "ESNext",
+  "scripts": {
+    "test": "npx jest --watchAll",
+    "build": "npx tsc",
+    "build:watch": "npx tsc --watch",
+    "build:doc": "typedoc --plugin typedoc-plugin-markdown --out docs src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lithium-framework/huid.git"
+  },
+  "publishConfig": {
+    "registry": "https://github.com/lithium-framework"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "get-random-values": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.24.4",
+    "@thesheps/jest-md-reporter": "^0.0.8",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
