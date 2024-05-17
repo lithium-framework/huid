@@ -49,3 +49,11 @@ jobs:
 
     - name: Run Node.js CI - Test to Production workflow
       run: lithium-framework/huid/.github/workflows/node.test.yml
+
+    - name: Run external workflow
+      run: |
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          "https://api.github.com/repos/lithium-framework/huid/actions/workflows/node.test.yml/dispatches" \
+          -d '{"ref":"test"}'
