@@ -86,7 +86,7 @@ jobs:
       - name: Fetch branch information from remote
         run: git fetch
 
-      - name: 
+      - name: Switch branch dev to test
         run: git switch -c test origin/test
 
       - name: Show Git status after switch
