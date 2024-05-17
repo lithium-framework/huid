@@ -62,6 +62,9 @@ jobs:
       - run: npm ci
       - run: npx tsc
 
+      - name: Remove src directory
+        run: rm -rf src
+
       - name: Configure Git with token
         run: |
           git config --global user.email "MortallicaXxX@hotmail.com"
