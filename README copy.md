@@ -13,7 +13,7 @@ Les UUID hiérarchiques sont des identifiants uniques qui combinent plusieurs co
 - Génération d'UUID hiérarchiques personnalisés.
 - Extraction des composants individuels d'un UUID hiérarchique.
 - Conversion d'UUID hiérarchiques en chaînes.
-- Génération d'UUID de version 4.
+- Génération d'UUID de version 4. a
 - Encodage de chaînes de longueur fixe avec des caractères hexadécimaux aléatoires.
 
 ## Installation

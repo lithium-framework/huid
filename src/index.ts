@@ -11,72 +11,101 @@ export type CollectionId = FixedLengthString<12>;
 export type HUID = `${ComponentId}-${ParentSegementId}-${CollectionId}`;
 
 /** 
- * Interface pour les options de l'UUID hiérarchique
-*/
-export interface HierarchicalUUIDOptions{
-
+ * Interface pour les options de l'UUID hiérarchique.
+ */
+export interface HierarchicalUUIDOptions {
   /** 
-   * Identifiant parent (optionnel)  
-  */
-  parentId?:FixedLengthString<12>;
+   * Identifiant parent (optionnel). 
+   */
+  parentId?: FixedLengthString<12>;
 
   /**
-   * Identifiant de collection (optionnel)
-  */
-  collectionId?:FixedLengthString<12>;
-
+   * Identifiant de collection (optionnel).
+   */
+  collectionId?: FixedLengthString<12>;
 }
 
 /** 
- * Classe _HUID pour manipuler les UUID hiérarchiques
+ * Classe _HUID pour manipuler les UUID hiérarchiques.
 */
 export class _HUID extends String{
 
   /**
-   * Méthode pour obtenir l'identifiant de composant en extrayant la première partie de l'UUID.
-   * @returns L'identifiant de composant est renvoyé.
+   * Obtient l'identifiant de composant en extrayant la première partie de l'UUID.
+   * @returns L'identifiant de composant.
+   * @example
+   * ```typescript
+   *  const uuid = new _HUID('123456789012-1234-5678-90ab-abcdefabcdef');
+   *  console.log(uuid.componentId); // '123456789012'
+   * ```
   */
   get componentId(){ return this.split('-')[0] as ComponentId; }
 
   /**
-   * Méthode pour obtenir la première section de l'UUID après sa division par '-'.
-   * @returns La première section de l'UUID après division par '-' est renvoyée.
+   * Obtient la première section de l'UUID après division par '-'.
+   * @returns La première section de l'UUID.
+   * @example
+   * ```typescript
+   *  const uuid = new _HUID('123456789012-1234-5678-90ab-abcdefabcdef');
+   *  console.log(uuid.section1); // '1234'
+   * ```
   */
   get section1(){ return this.split('-')[1] as Segment; }
 
   /**
-   * Méthode pour obtenir la deuxième section de l'UUID après sa division par '-'.
-   * @returns La deuxième section de l'UUID après division par '-' est renvoyée.
+   * Obtient la deuxième section de l'UUID après division par '-'.
+   * @returns La deuxième section de l'UUID.
+   * @example
+   * ```typescipt
+   *  const uuid = new _HUID('123456789012-1234-5678-90ab-abcdefabcdef');
+   *  console.log(uuid.section2); // '5678'
+   * ```
   */
   get section2(){ return this.split('-')[2] as Segment; }
 
   /**
-   * Méthode pour obtenir la troisième section de l'UUID après sa division par '-'.
-   * @returns La troisième section de l'UUID après division par '-' est renvoyée.
+   * Obtient la troisième section de l'UUID après division par '-'.
+   * @returns La troisième section de l'UUID.
+   * @example
+   * ```typescript
+   *  const uuid = new _HUID('123456789012-1234-5678-90ab-abcdefabcdef');
+   *  console.log(uuid.section3); // '90ab'
+   * ```
   */
   get section3(){ return this.split('-')[3] as Segment; }
 
   /**
-   * Méthode pour obtenir l'identifiant de collection en extrayant la cinquième partie de l'UUID.
-   * @returns L'identifiant de collection est renvoyé.
+   * Obtient l'identifiant de collection en extrayant la cinquième partie de l'UUID.
+   * @returns L'identifiant de collection.
+   * @example
+   * ```typescript
+   *  const uuid = new _HUID('123456789012-1234-5678-90ab-abcdefabcdef');
+   *  console.log(uuid.collectionId); // 'abcdefabcdef'
+   * ```
   */
   get collectionId(){ return this.split('-')[4] as CollectionId; }
 
   /**
-   * Méthode pour obtenir l'identifiant parent en concaténant les sections 1, 2 et 3.
-   * @returns La méthode `parentId` renvoie une chaîne qui est la concaténation de `this.section1`,
-   * `this.section2` et `this.section3`. La chaîne résultante a une longueur fixe de 12 caractères.
+   * Obtient l'identifiant parent en concaténant les sections 1, 2 et 3.
+   * @returns L'identifiant parent.
+   * @example
+   * ```typescript
+   *  const uuid = new _HUID('123456789012-1234-5678-90ab-abcdefabcdef');
+   *  console.log(uuid.parentId); // '1234567890ab'
+   * ```
   */
   get parentId(){ return [this.section1,this.section2,this.section3].join('') as FixedLengthString<12>; }
 
   /**
-   * Méthode pour étendre l'UUID hiérarchique avec des options personnalisées.
-   * @param {HierarchicalUUIDOptions} [options] - Le paramètre `options` est un objet facultatif
-   * pouvant être passé à la fonction `extend`. Il vous permet de personnaliser le comportement de
-   * la fonction en fournissant des valeurs pour les propriétés suivantes :
-   * @returns un nouvel UUID hiérarchique (_HUID) généré à l'aide de la méthode `uuid.hv1`. Les
-   * valeurs `parentId` et `collectionId` sont transmises en tant que paramètres à la méthode
-   * `uuid.hv1`.
+   * Étend l'UUID hiérarchique avec des options personnalisées.
+   * @param {HierarchicalUUIDOptions} [options] - Options pour personnaliser l'UUID.
+   * @returns Un nouvel UUID hiérarchique (_HUID).
+   * @example
+   * ```typescript
+   *  const uuid = new _HUID('123456789012-1234-5678-90ab-abcdefabcdef');
+   *  const extendedUUID = uuid.extend({ parentId: '098765432109', collectionId: 'abcdefabcdef' });
+   *  console.log(extendedUUID); // Un nouvel _HUID avec les sections mises à jour.
+   * ```
   */
   extend(options?:HierarchicalUUIDOptions){
 
@@ -90,54 +119,55 @@ export class _HUID extends String{
 }
 
 /** 
- * Classe pour générer des UUID 
+ * Classe pour générer des UUID.
 */
 export class uuid{
 
   /**
-   * Méthode pour obtenir une valeur par défaut pour l'identifiant de composant.
-   * @returns La valeur renvoyée est '000000000000' en tant que ComponentId.
+   * Obtient une valeur par défaut pour l'identifiant de composant.
+   * @returns '000000000000' en tant que ComponentId.
   */
   static get componentId(){ return '000000000000' as ComponentId; }
 
   /**
-   * Méthode pour obtenir une valeur par défaut pour la première section de l'UUID.
-   * @returns La valeur renvoyée est '0000' en tant que Segment.
+   * Obtient une valeur par défaut pour la première section de l'UUID.
+   * @returns '0000' en tant que Segment.
   */
   static get segment1(){ return '0000' as Segment; }
 
   /**
-   * Méthode pour obtenir une valeur par défaut pour la première section de l'UUID.
-   * @returns La valeur renvoyée est '0000' en tant que Segment.
+   * Obtient une valeur par défaut pour la deuxième section de l'UUID.
+   * @returns '0000' en tant que Segment.
   */
   static get segment2(){ return '0000' as Segment; }
 
   /**
-   * Méthode pour obtenir une valeur par défaut pour la première section de l'UUID.
-   * @returns La valeur renvoyée est '0000' en tant que Segment.
+   * Obtient une valeur par défaut pour la troisième section de l'UUID.
+   * @returns '0000' en tant que Segment.
   */
   static get segment3(){ return '0000' as Segment; }
 
   /**
-   * Méthode pour obtenir une valeur par défaut pour l'identifiant de collection.
-   * @returns La valeur renvoyée est '000000000000' en tant que CollectionId.
+   * Obtient une valeur par défaut pour l'identifiant de collection.
+   * @returns '000000000000' en tant que CollectionId.
   */
   static get collectionId(){ return '000000000000' as CollectionId; }
 
   /**
-   * Méthode pour obtenir un UUID NIL (null) par défaut.
-   * @returns L'UUID NIL est renvoyé sous forme de chaîne dans le format
-   * "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", où chaque "x" représente un chiffre hexadécimal.
+   * Obtient un UUID NIL (null) par défaut.
+   * @returns L'UUID NIL sous forme de chaîne.
   */
   static get NIL(){ return new _HUID(`${uuid.componentId}-${uuid.segment1}-${uuid.segment2}-${uuid.segment3}-${uuid.collectionId}`); }
 
   /**
-   * Méthode `encode` pour traiter une chaîne de longueur fixe en remplaçant certains caractères par
-   * des valeurs hexadécimales aléatoires.
-   * @param chaine - Le paramètre `chaine` est de type `FixedLengthString<N>`, c'est-à-dire une
-   * chaîne de longueur fixe. La longueur de la chaîne est déterminée par le type générique `N`,
-   * qui étend le type `number` et peut uniquement être soit `4` ou `12`.
-   * @returns une valeur de type `FixedLengthString<N> | FixedLengthString<N>`.
+   * Encode une chaîne de longueur fixe en remplaçant certains caractères par des valeurs hexadécimales aléatoires.
+   * @param chaine - Une chaîne de longueur fixe.
+   * @returns Une chaîne de longueur fixe avec des valeurs hexadécimales aléatoires.
+   * @example
+   * ```typescript
+   *  const encoded = uuid.encode('123456789012');
+   *  console.log(encoded); // '1a2b3c4d5e6f'
+   * ```
   */
   static encode< N extends number = 4 | 12 >( chaine:FixedLengthString<N> ){
     return chaine.replace(/[018]/g, (c:any) =>
@@ -147,10 +177,13 @@ export class uuid{
   }
 
   /**
-   * Méthode pour générer un UUID de version 4 en utilisant des valeurs aléatoires de la bibliothèque
-   * get-random-values.
-   * @returns un UUID de version 4 (Universally Unique Identifier) sous forme de chaîne dans le format
-   * "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", où chaque "x" représente un chiffre hexadécimal.
+   * Génère un UUID de version 4 en utilisant des valeurs aléatoires.
+   * @returns Un UUID de version 4 sous forme de chaîne.
+   * @example
+   * ```typescript
+   *  const uuidV4 = uuid.v4();
+   *  console.log(uuidV4); // Un UUID de version 4.
+   * ```
   */
   static v4(  ) {
 
@@ -163,12 +196,14 @@ export class uuid{
   }
 
   /**
-   * Méthode `hv1` pour générer un UUID hiérarchique en fonction des options fournies, y compris
-   * l'identifiant parent et l'identifiant de collection.
-   * @param {HierarchicalUUIDOptions} [options] - Le paramètre `options` est un objet facultatif qui
-   * peut contenir les propriétés suivantes :
-   * @returns un nouvel UUID hiérarchique (_HUID) qui est construit en concaténant les valeurs de
-   * `componentId`, `segment1`, `segment2`, `segment3` et `collectionId` avec des tirets ("-") entre eux.
+   * Génère un UUID hiérarchique en fonction des options fournies.
+   * @param {HierarchicalUUIDOptions} [options] - Options pour personnaliser l'UUID.
+   * @returns Un nouvel UUID hiérarchique (_HUID).
+   * @example
+   * ```typescript
+   *  const hierarchicalUUID = uuid.hv1({ parentId: '123456789012', collectionId: 'abcdefabcdef' });
+   *  console.log(hierarchicalUUID); // Un nouvel UUID hiérarchique (_HUID).
+   * ```
   */
   static hv1( options?:HierarchicalUUIDOptions ) {
 
