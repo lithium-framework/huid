@@ -1,12 +1,12 @@
 name: Node.js CI - Dev to Test
 
-permissions:
-  contents: write
-  actions: write
-
 on:
   push:
     branches: [ "dev" ]
+
+permissions:
+  contents: write
+  actions: write
 
 jobs:
   build:
