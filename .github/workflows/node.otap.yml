@@ -21,6 +21,14 @@ jobs:
         with:
           node-version: 18.x
           cache: 'npm'
+      
+      - name: Configure Git with token
+        run: |
+          git config --global user.email "MortallicaXxX@hotmail.com"
+          git config --global user.name "MortallicaXxX"
+          git config --global credential.helper store
+          echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
+          chmod 0600 ~/.git-credentials
 
       - name: Remove dist directory
         run: rm -rf dist
@@ -30,14 +38,6 @@ jobs:
           
       - name: Commit changes
         run: git commit -m "Clean dist folder"
-      
-      - name: Configure Git with token
-        run: |
-          git config --global user.email "MortallicaXxX@hotmail.com"
-          git config --global user.name "MortallicaXxX"
-          git config --global credential.helper store
-          echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
-          chmod 0600 ~/.git-credentials
       
       - name: Fetch branch information from remote
         run: git fetch
@@ -71,9 +71,6 @@ jobs:
       - run: npm ci
       - run: npx tsc
 
-      - name: Remove src directory
-        run: rm -rf src
-
       - name: Configure Git with token
         run: |
           git config --global user.email "MortallicaXxX@hotmail.com"
@@ -81,6 +78,9 @@ jobs:
           git config --global credential.helper store
           echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
           chmod 0600 ~/.git-credentials
+
+      - name: Remove src directory
+        run: rm -rf src
 
       - name: Add generated files
         run: git add .
