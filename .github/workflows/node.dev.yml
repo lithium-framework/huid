@@ -48,4 +48,4 @@ jobs:
       run: git push origin test
 
     - name: Run Node.js CI - Test to Production workflow
-      run: lithium-framework/huid/.github/workflows/node.test.yml@test
+      run: lithium-framework/huid/.github/workflows/node.test.yml
