@@ -86,8 +86,8 @@ jobs:
           echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
           chmod 0600 ~/.git-credentials
 
-      - name: Remove dist directory
-        run: rm -rf dist
+      - name: Remove src directory
+        run: rm -rf src
 
       - name: Add generated files
         run: git add .
