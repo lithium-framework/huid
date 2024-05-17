@@ -4,13 +4,9 @@ on:
   push:
     branches:
       - dev
-      - test
-      - prod
   pull_request:
     branches:
       - dev
-      - test
-      - prod
 
 jobs:
   dev-to-test:
