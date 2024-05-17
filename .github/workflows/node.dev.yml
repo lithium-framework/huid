@@ -29,6 +29,8 @@ jobs:
 
     - name: Configure Git with token
       run: |
+        git config --global user.email "MortallicaXxX@hotmail.com"
+        git config --global user.name "MortallicaXxX"
         git config --global credential.helper store
         echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
         chmod 0600 ~/.git-credentials
