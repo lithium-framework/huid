@@ -72,6 +72,12 @@ jobs:
           git config --global credential.helper store
           echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
           chmod 0600 ~/.git-credentials
+
+      - name: Add generated files
+        run: git add .
+        
+      - name: Commit changes
+        run: git commit -m "Add generated files"
       
       - name: Fetch branch information from remote
         run: git fetch
