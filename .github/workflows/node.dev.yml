@@ -1,0 +1,51 @@
+name: Node.js CI - Dev to Test
+
+on:
+  push:
+    branches: [ "dev" ]
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Configure Git with token
+      run: |
+        git config --global user.email "MortallicaXxX@hotmail.com"
+        git config --global user.name "MortallicaXxX"
+        git config --global credential.helper store
+        echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
+        chmod 0600 ~/.git-credentials
+
+    - name: Fetch branch information from remote
+      run: git fetch
+
+    - name: Show Git status before push
+      run: git status
+
+    - name: Create and merge into test branch
+      run: |
+        git checkout test || git checkout -b test origin/test
+        git merge --no-ff --allow-unrelated-histories -X ours dev
+    
+    - name: Push to branch test
+      run : git push origin test
+
+    - name: Show Git log after push
+      run: git log -1 --oneline
