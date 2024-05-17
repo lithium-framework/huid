@@ -31,9 +31,23 @@ jobs:
 
     - name: Remove src directory
       run: rm -rf src
-    
-    - name: Merge test into prod
+
+    - name: Configure Git with token
       run: |
-        git checkout prod
-        git merge --no-ff test
-        git push origin prod
+        git config --global user.email "MortallicaXxX@hotmail.com"
+        git config --global user.name "MortallicaXxX"
+        git config --global credential.helper store
+        echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
+        chmod 0600 ~/.git-credentials
+    
+    - name: Fetch branch information from remote
+      run: git fetch
+  
+    - name: Create prod branch locally
+      run: git checkout -b prod origin/prod
+  
+    - name: Merge test into prod
+      run: git merge --no-ff --allow-unrelated-histories -X ours test
+  
+    - name: Push changes to prod branch
+      run: git push origin prod
