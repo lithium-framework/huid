@@ -51,6 +51,7 @@ jobs:
 
   test-to-prod:
     runs-on: ubuntu-latest
+    needs: dev-to-test
 
     steps:
       - name: Checkout code
@@ -62,6 +63,20 @@ jobs:
           node-version: 18.x
           cache: 'npm'
 
+      - name: Configure Git with token
+        run: |
+          git config --global user.email "MortallicaXxX@hotmail.com"
+          git config --global user.name "MortallicaXxX"
+          git config --global credential.helper store
+          echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
+          chmod 0600 ~/.git-credentials
+      
+      - name: Fetch branch information from remote
+        run: git fetch
+      
+      - name: Show Git status before push
+        run: git status
+
       - name: Merge and push to prod branch
         run: |
           git checkout prod || git checkout -b prod origin/prod
@@ -70,6 +85,7 @@ jobs:
 
   prod-publish:
     runs-on: ubuntu-latest
+    needs: test-to-prod
 
     steps:
       - name: Checkout code
