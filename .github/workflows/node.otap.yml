@@ -110,9 +110,9 @@ jobs:
           git diff --quiet && echo "::set-output name=has_changes::false" || echo "::set-output name=has_changes::true"
         continue-on-error: true
 
-      - name: Commit changes
+      - name: Commit changes and push
         if: steps.git-check.outputs.has_changes == 'true'
-        run: git commit -m "Add generated files" || echo "No changes to commit"
+        run: git commit -m "Add generated files" && git push || echo "No changes to commit"
       
       - name: Show Git status before push
         run: git status
