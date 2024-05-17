@@ -39,7 +39,9 @@ jobs:
       run: |
         git checkout test || git checkout -b test origin/test
         git merge --no-ff --allow-unrelated-histories -X ours dev
-        git push origin test
+    
+    - name: Push to branch test
+      run : git push origin test
 
     - name: Show Git log after push
       run: git log -1 --oneline
