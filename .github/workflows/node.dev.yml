@@ -1,12 +1,7 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI - Dev to Test
 
 on:
   push:
-    branches: [ "dev" ]
-  pull_request:
     branches: [ "dev" ]
 
 jobs:
@@ -17,7 +12,6 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v3
@@ -38,11 +32,8 @@ jobs:
     - name: Fetch branch information from remote
       run: git fetch
 
-    - name: Create test branch locally
-      run: git checkout -b test origin/test
-
-    - name: Merge dev into test
-      run: git merge --no-ff --allow-unrelated-histories -X ours dev
-
-    - name: Push changes to test branch
-      run: git push origin test
+    - name: Create and merge into test branch
+      run: |
+        git checkout test || git checkout -b test origin/test
+        git merge --no-ff --allow-unrelated-histories -X ours dev
+        git push origin test
