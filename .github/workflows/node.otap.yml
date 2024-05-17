@@ -73,12 +73,25 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses : actions/checkout@v2
+
+      - name: Setup Node.js
+        uses : actions/setup-node@v1
+        with :
+          node-version : 18
+          registry-url : https://npm.pkg.github.com
+          scope : '@lithium-framework'
       
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: 'npm'
+      - name: Add authentication token to ~/.npmrc
+        run: echo "@lithium-framework:registry=https://npm.pkg.github.com/" > .npmrc && echo "//npm.pkg.github.com/:_authToken=${{secrets.PUBLISH_TOKEN}}" >> .npmrc
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build TypeScript files
+        run: npx --yes tsc
+
+      - name: Publish to GitHub Packages
+        run: npm publish
 
       # Steps for building and publishing package for prod branch
