@@ -36,8 +36,15 @@ jobs:
       - name: Add generated files
         run: git add .
           
+      - name: Check if there are changes to commit
+        id: git-check
+        run: |
+          git diff --quiet && echo "::set-output name=has_changes::false" || echo "::set-output name=has_changes::true"
+        continue-on-error: true
+
       - name: Commit changes
-        run: git commit -m "Clean dist folder"
+        if: steps.git-check.outputs.has_changes == 'true'
+        run: git commit -m "Clean dist folder" || echo "No changes to commit"
       
       - name: Fetch branch information from remote
         run: git fetch
@@ -79,14 +86,21 @@ jobs:
           echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
           chmod 0600 ~/.git-credentials
 
-      - name: Remove src directory
-        run: rm -rf src
+      - name: Remove dist directory
+        run: rm -rf dist
 
       - name: Add generated files
         run: git add .
-        
+          
+      - name: Check if there are changes to commit
+        id: git-check
+        run: |
+          git diff --quiet && echo "::set-output name=has_changes::false" || echo "::set-output name=has_changes::true"
+        continue-on-error: true
+
       - name: Commit changes
-        run: git commit -m "Add generated files"
+        if: steps.git-check.outputs.has_changes == 'true'
+        run: git commit -m "Add generated files" || echo "No changes to commit"
       
       - name: Fetch branch information from remote
         run: git fetch
