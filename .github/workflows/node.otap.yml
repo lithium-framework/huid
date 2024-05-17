@@ -86,6 +86,12 @@ jobs:
           echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
           chmod 0600 ~/.git-credentials
 
+      - name: 
+        run: git switch -b test origin/test
+
+      - name: Show Git status after switch
+        run: git status
+
       - name: Remove src directory
         run: rm -rf src
 
