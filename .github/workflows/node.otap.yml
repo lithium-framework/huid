@@ -21,6 +21,15 @@ jobs:
         with:
           node-version: 18.x
           cache: 'npm'
+
+      - name: Remove dist directory
+        run: rm -rf dist
+
+      - name: Add generated files
+        run: git add .
+          
+      - name: Commit changes
+        run: git commit -m "Clean dist folder"
       
       - name: Configure Git with token
         run: |
