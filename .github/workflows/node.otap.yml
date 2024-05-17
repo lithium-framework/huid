@@ -14,7 +14,6 @@ on:
 
 jobs:
   dev-to-test:
-    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
 
     steps:
@@ -51,8 +50,8 @@ jobs:
         run: git log -1 --oneline
 
   test-to-prod:
-    if: github.ref == 'refs/heads/test'
     runs-on: ubuntu-latest
+    needs: dev-to-test
 
     steps:
       - name: Checkout code
@@ -64,20 +63,51 @@ jobs:
           node-version: 18.x
           cache: 'npm'
 
-      # Steps for building and publishing to prod branch
+      - name: Configure Git with token
+        run: |
+          git config --global user.email "MortallicaXxX@hotmail.com"
+          git config --global user.name "MortallicaXxX"
+          git config --global credential.helper store
+          echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
+          chmod 0600 ~/.git-credentials
+      
+      - name: Fetch branch information from remote
+        run: git fetch
+      
+      - name: Show Git status before push
+        run: git status
+
+      - name: Merge and push to prod branch
+        run: |
+          git checkout prod || git checkout -b prod origin/prod
+          git merge --no-ff --allow-unrelated-histories -X ours test
+          git push origin prod
 
   prod-publish:
-    if: github.ref == 'refs/heads/prod'
     runs-on: ubuntu-latest
+    needs: test-to-prod
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: 'npm'
+        uses : actions/checkout@v2
 
-      # Steps for publishing package
+      - name: Setup Node.js
+        uses : actions/setup-node@v1
+        with :
+          node-version : 18
+          registry-url : https://npm.pkg.github.com
+          scope : '@lithium-framework'
+      
+      - name: Add authentication token to ~/.npmrc
+        run: echo "@lithium-framework:registry=https://npm.pkg.github.com/" > .npmrc && echo "//npm.pkg.github.com/:_authToken=${{secrets.PUBLISH_TOKEN}}" >> .npmrc
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build TypeScript files
+        run: npx --yes tsc
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+
+      # Steps for building and publishing package for prod branch
