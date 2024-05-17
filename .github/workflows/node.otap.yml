@@ -89,6 +89,9 @@ jobs:
       - name: Fetch branch information from remote
         run: git fetch
 
+      - name: Pull branch from remote
+        run: git pull
+
       - name: 
         run: git switch -c test origin/test
 
