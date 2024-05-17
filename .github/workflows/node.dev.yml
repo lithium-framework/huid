@@ -42,7 +42,7 @@ jobs:
       run: git checkout -b test origin/test
 
     - name: Merge dev into test
-      run: git merge --no-ff --allow-unrelated-histories dev
+      run: git merge --no-ff --allow-unrelated-histories -X ours dev
 
     - name: Push changes to test branch
       run: git push origin test
