@@ -28,3 +28,12 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npx tsc
+
+    - name: Remove src directory
+      run: rm -rf src
+    
+    - name: Merge test into prod
+      run: |
+        git checkout prod
+        git merge --no-ff test
+        git push origin prod
