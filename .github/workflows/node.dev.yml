@@ -32,11 +32,14 @@ jobs:
     - name: Fetch branch information from remote
       run: git fetch
 
+    - name: Show Git status before push
+      run: git status
+
     - name: Create and merge into test branch
       run: |
         git checkout test || git checkout -b test origin/test
         git merge --no-ff --allow-unrelated-histories -X ours dev
         git push origin test
 
-    - name: Git log
-      run: git log
+    - name: Show Git log after push
+      run: git log -1 --oneline
