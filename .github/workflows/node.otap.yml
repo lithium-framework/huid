@@ -14,7 +14,6 @@ on:
 
 jobs:
   dev-to-test:
-    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
 
     steps:
@@ -51,7 +50,6 @@ jobs:
         run: git log -1 --oneline
 
   test-to-prod:
-    if: github.ref == 'refs/heads/test'
     runs-on: ubuntu-latest
 
     steps:
@@ -64,10 +62,13 @@ jobs:
           node-version: 18.x
           cache: 'npm'
 
-      # Steps for building and publishing to prod branch
+      - name: Merge and push to prod branch
+        run: |
+          git checkout prod || git checkout -b prod origin/prod
+          git merge --no-ff --allow-unrelated-histories -X ours test
+          git push origin prod
 
   prod-publish:
-    if: github.ref == 'refs/heads/prod'
     runs-on: ubuntu-latest
 
     steps:
@@ -80,4 +81,4 @@ jobs:
           node-version: 18.x
           cache: 'npm'
 
-      # Steps for publishing package
+      # Steps for building and publishing package for prod branch
