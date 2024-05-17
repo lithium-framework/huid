@@ -49,3 +49,11 @@ jobs:
 
     - name: Show Git log after push
       run: git log -1 --oneline
+
+    - name: Trigger Test to Production workflow
+      run: |
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          "https://api.github.com/repos/${{ github.repository }}/actions/workflows/Node.js%20CI%20-%20Test%20to%20Production/dispatches" \
+          -d '{"ref":"test"}'
