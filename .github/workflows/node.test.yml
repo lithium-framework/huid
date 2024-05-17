@@ -49,3 +49,6 @@ jobs:
   
     - name: Push changes to prod branch
       run: git push origin prod
+
+    - name: Git log
+      run: git log
