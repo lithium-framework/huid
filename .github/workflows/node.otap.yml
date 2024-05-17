@@ -39,7 +39,7 @@ jobs:
       - name: Merge and push to test branch
         run: |
           git checkout test || git checkout -b test origin/test
-          git merge --no-ff --allow-unrelated-histories -X ours dev
+          git merge --no-ff --allow-unrelated-histories -X theirs dev
           git push origin test
 
       - name: Show Git log after push
@@ -81,8 +81,8 @@ jobs:
 
       - name: Merge and push to prod branch
         run: |
-          git checkout -b prod origin/prod
-          git merge --no-ff --allow-unrelated-histories -X ours test
+          git checkout prod || git checkout -b prod origin/prod
+          git merge --no-ff --allow-unrelated-histories -X theirs test
           git push origin prod
 
   prod-publish:
@@ -102,12 +102,6 @@ jobs:
       
       - name: Add authentication token to ~/.npmrc
         run: echo "@lithium-framework:registry=https://npm.pkg.github.com/" > .npmrc && echo "//npm.pkg.github.com/:_authToken=${{secrets.PUBLISH_TOKEN}}" >> .npmrc
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build TypeScript files
-        run: npx --yes tsc
 
       - name: Publish to GitHub Packages
         run: npm publish
