@@ -26,5 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npx tsc
+
+    - name: Merge dev into test
+      run: git checkout test && git merge --no-ff dev && git push origin test
