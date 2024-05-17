@@ -75,7 +75,7 @@ jobs:
 
       - name: Merge and push to prod branch
         run: |
-          git checkout prod || git checkout -b prod origin/prod
+          git checkout -b prod origin/prod
           git merge --no-ff --allow-unrelated-histories -X ours test
           git push origin prod
 
