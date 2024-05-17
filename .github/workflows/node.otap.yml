@@ -75,9 +75,6 @@ jobs:
           node-version: 18.x
           cache: 'npm'
 
-      - run: npm ci
-      - run: npx tsc
-
       - name: Configure Git with token
         run: |
           git config --global user.email "MortallicaXxX@hotmail.com"
@@ -89,14 +86,17 @@ jobs:
       - name: Fetch branch information from remote
         run: git fetch
 
-      - name: Pull branch from remote
-        run: git pull
-
       - name: 
         run: git switch -c test origin/test
 
       - name: Show Git status after switch
         run: git status
+
+      - name: Pull branch from remote
+        run: git pull
+
+      - run: npm ci
+      - run: npx tsc
 
       - name: Remove src directory
         run: rm -rf src
