@@ -232,3 +232,5 @@ export class uuid{
   }
 
 }
+
+console.log({ message : 'holle' })
