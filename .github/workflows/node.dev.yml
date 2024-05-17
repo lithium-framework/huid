@@ -27,6 +27,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
+    - name: Configure Git with token
+      run: |
+        git config --global credential.helper store
+        echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
+        chmod 0600 ~/.git-credentials
+
     - name: Fetch branch information from remote
       run: git fetch
 
