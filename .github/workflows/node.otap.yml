@@ -29,6 +29,16 @@ jobs:
           git config --global credential.helper store
           echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
           chmod 0600 ~/.git-credentials
+
+      - name: Remove dist directory
+        run: rm -rf dist
+
+      - name: Add generated files
+        run: git add .
+
+      - name: Commit changes
+        run: git commit -m "Clean dist folder" || echo "No changes to commit"
+        continue-on-error: true
       
       - name: Fetch branch information from remote
         run: git fetch
@@ -39,7 +49,7 @@ jobs:
       - name: Merge and push to test branch
         run: |
           git checkout test || git checkout -b test origin/test
-          git merge --no-ff --allow-unrelated-histories -X ours dev
+          git merge --no-ff --allow-unrelated-histories -X theirs dev
           git push origin test
 
       - name: Show Git log after push
@@ -66,9 +76,31 @@ jobs:
           git config --global credential.helper store
           echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
           chmod 0600 ~/.git-credentials
-      
+
       - name: Fetch branch information from remote
         run: git fetch
+
+      - name: Switch branch dev to test
+        run: git switch -c test origin/test
+
+      - name: Show Git status after switch
+        run: git status
+
+      - name: Pull branch from remote
+        run: git pull
+
+      - run: npm ci
+      - run: npx tsc
+
+      - name: Remove src directory
+        run: rm -rf src
+
+      - name: Add generated files
+        run: git add .
+
+      - name: Commit changes and push
+        run: git commit -m "Add generated files" && git push || echo "No changes to commit"
+        continue-on-error: true
       
       - name: Show Git status before push
         run: git status
@@ -76,7 +108,7 @@ jobs:
       - name: Merge and push to prod branch
         run: |
           git checkout prod || git checkout -b prod origin/prod
-          git merge --no-ff --allow-unrelated-histories -X ours test
+          git merge --no-ff --allow-unrelated-histories -X theirs test
           git push origin prod
 
   prod-publish:
@@ -96,12 +128,6 @@ jobs:
       
       - name: Add authentication token to ~/.npmrc
         run: echo "@lithium-framework:registry=https://npm.pkg.github.com/" > .npmrc && echo "//npm.pkg.github.com/:_authToken=${{secrets.PUBLISH_TOKEN}}" >> .npmrc
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build TypeScript files
-        run: npx --yes tsc
 
       - name: Publish to GitHub Packages
         run: npm publish
