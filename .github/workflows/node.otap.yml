@@ -42,7 +42,7 @@ jobs:
           git push
         continue-on-error: true
       
-      - name: Fetch branch information from remote
+      - name: Fetch branchs information from remote
         run: git fetch
       
       - name: Show Git status before push
@@ -79,7 +79,7 @@ jobs:
           echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
           chmod 0600 ~/.git-credentials
 
-      - name: Fetch branch information from remote
+      - name: Fetch branchs information from remote
         run: git fetch
 
       - name: Switch branch dev to test
@@ -139,8 +139,11 @@ jobs:
       - name: Add authentication token to ~/.npmrc
         run: echo "@lithium-framework:registry=https://npm.pkg.github.com/" > .npmrc && echo "//npm.pkg.github.com/:_authToken=${{secrets.PUBLISH_TOKEN}}" >> .npmrc
 
-      - name: Switch branch dev
-        run: git switch -c test origin/test
+      - name: Fetch branchs information from remote
+        run: git fetch
+
+      - name: Switch branch prod
+        run: git switch -c test origin/prod
 
       - name: Publish to GitHub Packages
         run: npm publish
