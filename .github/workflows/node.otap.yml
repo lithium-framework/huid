@@ -36,8 +36,10 @@ jobs:
       - name: Add generated files
         run: git add .
 
-      - name: Commit changes
-        run: git commit -m "Clean dist folder" || echo "No changes to commit"
+      - name: Commit changess
+        run: |
+          git commit -m "Clean dist folder"
+          git push
         continue-on-error: true
       
       - name: Fetch branch information from remote
@@ -126,8 +128,19 @@ jobs:
           registry-url : https://npm.pkg.github.com
           scope : '@lithium-framework'
       
+      - name: Configure Git with token
+        run: |
+          git config --global user.email "MortallicaXxX@hotmail.com"
+          git config --global user.name "MortallicaXxX"
+          git config --global credential.helper store
+          echo "https://github.com:${{ secrets.PUBLISH_TOKEN }}" > ~/.git-credentials
+          chmod 0600 ~/.git-credentials
+      
       - name: Add authentication token to ~/.npmrc
         run: echo "@lithium-framework:registry=https://npm.pkg.github.com/" > .npmrc && echo "//npm.pkg.github.com/:_authToken=${{secrets.PUBLISH_TOKEN}}" >> .npmrc
+
+      - name: Switch branch dev
+        run: git switch -c test origin/test
 
       - name: Publish to GitHub Packages
         run: npm publish
