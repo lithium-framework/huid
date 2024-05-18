@@ -35,16 +35,10 @@ jobs:
 
       - name: Add generated files
         run: git add .
-          
-      - name: Check if there are changes to commit
-        id: git-check
-        run: |
-          git diff --quiet && echo "::set-output name=has_changes::false" || echo "::set-output name=has_changes::true"
-        continue-on-error: true
 
       - name: Commit changes
-        if: steps.git-check.outputs.has_changes == 'true'
         run: git commit -m "Clean dist folder" || echo "No changes to commit"
+        continue-on-error: true
       
       - name: Fetch branch information from remote
         run: git fetch
