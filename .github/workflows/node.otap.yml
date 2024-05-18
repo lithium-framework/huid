@@ -146,6 +146,6 @@ jobs:
         run: git switch -c test origin/prod
 
       - name: Publish to GitHub Packages
-        run: npm publish
+        run: npm publish || echo "::warning::Publish failed, please check the logs"
 
       # Steps for building and publishing package for prod branch
