@@ -154,14 +154,14 @@ jobs:
           echo "Previous version: $PREVIOUS_VERSION"
           echo "New version: $NEW_VERSION"
           if [[ "$NEW_VERSION" != "$PREVIOUS_VERSION" ]]; then
-            echo "::set-output name=version_changed::true"
+            echo "version_changed=true" >> $GITHUB_OUTPUT
             if [[ "$NEW_VERSION" =~ .*-.* ]]; then
-              echo "::set-output name=publish_type::prepatch"
+              echo "publish_type=prepatch" >> $GITHUB_OUTPUT
             else
-              echo "::set-output name=publish_type::release"
+              echo "publish_type=release" >> $GITHUB_OUTPUT
             fi
           else
-            echo "::set-output name=version_changed::false"
+            echo "version_changed=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Publish to GitHub Packages
