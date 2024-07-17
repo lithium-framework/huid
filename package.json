@@ -17,9 +17,6 @@
     "type": "git",
     "url": "https://github.com/lithium-framework/huid.git"
   },
-  "publishConfig": {
-    "registry": "https://github.com/lithium-framework"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
