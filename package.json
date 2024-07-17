@@ -2,7 +2,7 @@
   "name": "@lithium-framework/huid",
   "version": "1.0.1-0",
   "description": "Hierarchical Unique Identifier",
-  "main": "dist/index.js",
+  "main": "./index.js",
   "type": "module",
   "module": "ESNext",
   "public": false,
