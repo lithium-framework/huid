@@ -2,7 +2,7 @@
   "name": "@lithium-framework/huid",
   "version": "1.0.1-0",
   "description": "Hierarchical Unique Identifier",
-  "main": "dist/index.js",
+  "main": "./index.js",
   "type": "module",
   "module": "ESNext",
   "public": false,
@@ -16,9 +16,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/lithium-framework/huid.git"
-  },
-  "publishConfig": {
-    "registry": "https://github.com/lithium-framework"
   },
   "author": "",
   "license": "ISC",
