@@ -5,11 +5,13 @@
   "main": "dist/index.js",
   "type": "module",
   "module": "ESNext",
+  "public": false,
   "scripts": {
-    "test": "npx jest --watchAll",
-    "build": "npx tsc",
-    "build:watch": "npx tsc --watch",
-    "build:doc": "typedoc --plugin typedoc-plugin-markdown --out docs src/index.ts"
+    "test": "npx jest",
+    "test:watch": "npx jest --watchAll",
+    "build:doc": "typedoc --plugin typedoc-plugin-markdown --out docs src/index.ts",
+    "build:dev": "node ./scripts/generate-tsconfig.cjs && tsc --watch",
+    "build:prod": "NODE_ENV=production node ./scripts/generate-tsconfig.cjs && npx tsc"
   },
   "repository": {
     "type": "git",
