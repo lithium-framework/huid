@@ -224,7 +224,7 @@ jobs:
         continue-on-error: true
 
       - name: Pull branch from remote
-        if: needs.prod-publish.outputs.diff == 'Not found' || needs.prod-publish.outputs.diff == 'patch' || needs.prod-publish.outputs.diff == 'minor' || needs.prod-publish.outputs.diff == 'major'
+        if: needs.prod-publish.outputs.diff == 'Not found' || needs.prod-publish.outputs.diff == 'patch' || needs.prod-publish.outputs.diff == 'minor' || needs.prod-publish.outputs.diff == 'preminor' || needs.prod-publish.outputs.diff == 'major' || needs.prod-publish.outputs.diff == 'premajor'
         run: git pull
 
       - name: Add authentication token to ~/.npmrc
