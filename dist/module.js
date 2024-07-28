@@ -1,21 +1,10 @@
-import * as $7yQUC$getrandomvalues from "get-random-values";
+import $hgUW1$getrandomvalues from "get-random-values";
 
-var $149c1bd638913645$exports = {};
-"use strict";
-Object.defineProperty($149c1bd638913645$exports, "__esModule", {
-    value: true
-});
-$149c1bd638913645$exports.uuid = $149c1bd638913645$exports._HUID = void 0;
+// ===============================================
+// https://www.npmjs.com/package/get-random-values
+// ===============================================
 
-var $149c1bd638913645$var$_getRandomValues = $149c1bd638913645$var$_interopRequireDefault($7yQUC$getrandomvalues);
-function $149c1bd638913645$var$_interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        default: obj
-    };
-}
-/** 
- * Classe _HUID pour manipuler les UUID hiérarchiques.
-*/ class $149c1bd638913645$var$_HUID extends String {
+class $149c1bd638913645$export$74e446f6456d826d extends String {
     /**
    * Obtient l'identifiant de composant en extrayant la première partie de l'UUID.
    * @returns L'identifiant de composant.
@@ -97,16 +86,13 @@ function $149c1bd638913645$var$_interopRequireDefault(obj) {
    *  console.log(extendedUUID); // Un nouvel _HUID avec les sections mises à jour.
    * ```
   */ extend(options) {
-        return $149c1bd638913645$var$uuid.hv1({
+        return $149c1bd638913645$export$31b40729666a4ae0.hv1({
             parentId: this.componentId,
             collectionId: this.collectionId
         });
     }
 }
-/** 
- * Classe pour générer des UUID.
-*/ $149c1bd638913645$exports._HUID = $149c1bd638913645$var$_HUID;
-class $149c1bd638913645$var$uuid {
+class $149c1bd638913645$export$31b40729666a4ae0 {
     /**
    * Obtient une valeur par défaut pour l'identifiant de composant.
    * @returns '000000000000' en tant que ComponentId.
@@ -141,7 +127,7 @@ class $149c1bd638913645$var$uuid {
    * Obtient un UUID NIL (null) par défaut.
    * @returns L'UUID NIL sous forme de chaîne.
   */ static get NIL() {
-        return new $149c1bd638913645$var$_HUID(`${$149c1bd638913645$var$uuid.componentId}-${$149c1bd638913645$var$uuid.segment1}-${$149c1bd638913645$var$uuid.segment2}-${$149c1bd638913645$var$uuid.segment3}-${$149c1bd638913645$var$uuid.collectionId}`);
+        return new $149c1bd638913645$export$74e446f6456d826d(`${$149c1bd638913645$export$31b40729666a4ae0.componentId}-${$149c1bd638913645$export$31b40729666a4ae0.segment1}-${$149c1bd638913645$export$31b40729666a4ae0.segment2}-${$149c1bd638913645$export$31b40729666a4ae0.segment3}-${$149c1bd638913645$export$31b40729666a4ae0.collectionId}`);
     }
     /**
    * Encode une chaîne de longueur fixe en remplaçant certains caractères par des valeurs hexadécimales aléatoires.
@@ -154,7 +140,7 @@ class $149c1bd638913645$var$uuid {
    * ```
   */ static encode(chaine) {
         return chaine.replace(/[018]/g, (c)=>{
-            return (c ^ (0, $149c1bd638913645$var$_getRandomValues.default)(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
+            return (c ^ (0, $hgUW1$getrandomvalues)(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
         });
     }
     /**
@@ -166,8 +152,8 @@ class $149c1bd638913645$var$uuid {
    *  console.log(uuidV4); // Un UUID de version 4.
    * ```
   */ static v4() {
-        return $149c1bd638913645$var$uuid.NIL.replace(/[018]/g, (c)=>{
-            return (c ^ (0, $149c1bd638913645$var$_getRandomValues.default)(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
+        return $149c1bd638913645$export$31b40729666a4ae0.NIL.replace(/[018]/g, (c)=>{
+            return (c ^ (0, $hgUW1$getrandomvalues)(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
         });
     }
     /**
@@ -184,22 +170,21 @@ class $149c1bd638913645$var$uuid {
             parentId: null,
             collectionId: null
         };
-        let componentId = $149c1bd638913645$var$uuid.encode($149c1bd638913645$var$uuid.componentId);
-        let segment1 = $149c1bd638913645$var$uuid.encode($149c1bd638913645$var$uuid.segment1);
-        let segment2 = $149c1bd638913645$var$uuid.encode($149c1bd638913645$var$uuid.segment2);
-        let segment3 = $149c1bd638913645$var$uuid.encode($149c1bd638913645$var$uuid.segment3);
-        let collectionId = $149c1bd638913645$var$uuid.encode($149c1bd638913645$var$uuid.collectionId);
+        let componentId = $149c1bd638913645$export$31b40729666a4ae0.encode($149c1bd638913645$export$31b40729666a4ae0.componentId);
+        let segment1 = $149c1bd638913645$export$31b40729666a4ae0.encode($149c1bd638913645$export$31b40729666a4ae0.segment1);
+        let segment2 = $149c1bd638913645$export$31b40729666a4ae0.encode($149c1bd638913645$export$31b40729666a4ae0.segment2);
+        let segment3 = $149c1bd638913645$export$31b40729666a4ae0.encode($149c1bd638913645$export$31b40729666a4ae0.segment3);
+        let collectionId = $149c1bd638913645$export$31b40729666a4ae0.encode($149c1bd638913645$export$31b40729666a4ae0.collectionId);
         if (options.parentId && options.parentId.length == 12) {
             segment1 = options.parentId.slice(0, 4);
             segment2 = options.parentId.slice(4, 8);
             segment3 = options.parentId.slice(8, 12);
         } else console.error("parentId.length exeded 12 char length.");
         if (options.collectionId) collectionId = options.collectionId;
-        return new $149c1bd638913645$var$_HUID(`${componentId}-${segment1}-${segment2}-${segment3}-${collectionId}`);
+        return new $149c1bd638913645$export$74e446f6456d826d(`${componentId}-${segment1}-${segment2}-${segment3}-${collectionId}`);
     }
 }
-$149c1bd638913645$exports.uuid = $149c1bd638913645$var$uuid;
 
 
-export {$149c1bd638913645$exports as default};
+export {$149c1bd638913645$export$74e446f6456d826d as _HUID, $149c1bd638913645$export$31b40729666a4ae0 as uuid};
 //# sourceMappingURL=module.js.map

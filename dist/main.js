@@ -1,20 +1,21 @@
-var $jdfeV$getrandomvalues = require("get-random-values");
+var $8zHUo$getrandomvalues = require("get-random-values");
 
-"use strict";
-Object.defineProperty(module.exports, "__esModule", {
-    value: true
-});
-module.exports.uuid = module.exports._HUID = void 0;
 
-var $882b6d93070905b3$var$_getRandomValues = $882b6d93070905b3$var$_interopRequireDefault($jdfeV$getrandomvalues);
-function $882b6d93070905b3$var$_interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        default: obj
-    };
+function $parcel$interopDefault(a) {
+  return a && a.__esModule ? a.default : a;
 }
-/** 
- * Classe _HUID pour manipuler les UUID hiérarchiques.
-*/ class $882b6d93070905b3$var$_HUID extends String {
+
+function $parcel$export(e, n, v, s) {
+  Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
+}
+
+$parcel$export(module.exports, "_HUID", () => $882b6d93070905b3$export$74e446f6456d826d);
+$parcel$export(module.exports, "uuid", () => $882b6d93070905b3$export$31b40729666a4ae0);
+// ===============================================
+// https://www.npmjs.com/package/get-random-values
+// ===============================================
+
+class $882b6d93070905b3$export$74e446f6456d826d extends String {
     /**
    * Obtient l'identifiant de composant en extrayant la première partie de l'UUID.
    * @returns L'identifiant de composant.
@@ -96,16 +97,13 @@ function $882b6d93070905b3$var$_interopRequireDefault(obj) {
    *  console.log(extendedUUID); // Un nouvel _HUID avec les sections mises à jour.
    * ```
   */ extend(options) {
-        return $882b6d93070905b3$var$uuid.hv1({
+        return $882b6d93070905b3$export$31b40729666a4ae0.hv1({
             parentId: this.componentId,
             collectionId: this.collectionId
         });
     }
 }
-/** 
- * Classe pour générer des UUID.
-*/ module.exports._HUID = $882b6d93070905b3$var$_HUID;
-class $882b6d93070905b3$var$uuid {
+class $882b6d93070905b3$export$31b40729666a4ae0 {
     /**
    * Obtient une valeur par défaut pour l'identifiant de composant.
    * @returns '000000000000' en tant que ComponentId.
@@ -140,7 +138,7 @@ class $882b6d93070905b3$var$uuid {
    * Obtient un UUID NIL (null) par défaut.
    * @returns L'UUID NIL sous forme de chaîne.
   */ static get NIL() {
-        return new $882b6d93070905b3$var$_HUID(`${$882b6d93070905b3$var$uuid.componentId}-${$882b6d93070905b3$var$uuid.segment1}-${$882b6d93070905b3$var$uuid.segment2}-${$882b6d93070905b3$var$uuid.segment3}-${$882b6d93070905b3$var$uuid.collectionId}`);
+        return new $882b6d93070905b3$export$74e446f6456d826d(`${$882b6d93070905b3$export$31b40729666a4ae0.componentId}-${$882b6d93070905b3$export$31b40729666a4ae0.segment1}-${$882b6d93070905b3$export$31b40729666a4ae0.segment2}-${$882b6d93070905b3$export$31b40729666a4ae0.segment3}-${$882b6d93070905b3$export$31b40729666a4ae0.collectionId}`);
     }
     /**
    * Encode une chaîne de longueur fixe en remplaçant certains caractères par des valeurs hexadécimales aléatoires.
@@ -153,7 +151,7 @@ class $882b6d93070905b3$var$uuid {
    * ```
   */ static encode(chaine) {
         return chaine.replace(/[018]/g, (c)=>{
-            return (c ^ (0, $882b6d93070905b3$var$_getRandomValues.default)(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
+            return (c ^ (0, ($parcel$interopDefault($8zHUo$getrandomvalues)))(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
         });
     }
     /**
@@ -165,8 +163,8 @@ class $882b6d93070905b3$var$uuid {
    *  console.log(uuidV4); // Un UUID de version 4.
    * ```
   */ static v4() {
-        return $882b6d93070905b3$var$uuid.NIL.replace(/[018]/g, (c)=>{
-            return (c ^ (0, $882b6d93070905b3$var$_getRandomValues.default)(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
+        return $882b6d93070905b3$export$31b40729666a4ae0.NIL.replace(/[018]/g, (c)=>{
+            return (c ^ (0, ($parcel$interopDefault($8zHUo$getrandomvalues)))(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
         });
     }
     /**
@@ -183,21 +181,20 @@ class $882b6d93070905b3$var$uuid {
             parentId: null,
             collectionId: null
         };
-        let componentId = $882b6d93070905b3$var$uuid.encode($882b6d93070905b3$var$uuid.componentId);
-        let segment1 = $882b6d93070905b3$var$uuid.encode($882b6d93070905b3$var$uuid.segment1);
-        let segment2 = $882b6d93070905b3$var$uuid.encode($882b6d93070905b3$var$uuid.segment2);
-        let segment3 = $882b6d93070905b3$var$uuid.encode($882b6d93070905b3$var$uuid.segment3);
-        let collectionId = $882b6d93070905b3$var$uuid.encode($882b6d93070905b3$var$uuid.collectionId);
+        let componentId = $882b6d93070905b3$export$31b40729666a4ae0.encode($882b6d93070905b3$export$31b40729666a4ae0.componentId);
+        let segment1 = $882b6d93070905b3$export$31b40729666a4ae0.encode($882b6d93070905b3$export$31b40729666a4ae0.segment1);
+        let segment2 = $882b6d93070905b3$export$31b40729666a4ae0.encode($882b6d93070905b3$export$31b40729666a4ae0.segment2);
+        let segment3 = $882b6d93070905b3$export$31b40729666a4ae0.encode($882b6d93070905b3$export$31b40729666a4ae0.segment3);
+        let collectionId = $882b6d93070905b3$export$31b40729666a4ae0.encode($882b6d93070905b3$export$31b40729666a4ae0.collectionId);
         if (options.parentId && options.parentId.length == 12) {
             segment1 = options.parentId.slice(0, 4);
             segment2 = options.parentId.slice(4, 8);
             segment3 = options.parentId.slice(8, 12);
         } else console.error("parentId.length exeded 12 char length.");
         if (options.collectionId) collectionId = options.collectionId;
-        return new $882b6d93070905b3$var$_HUID(`${componentId}-${segment1}-${segment2}-${segment3}-${collectionId}`);
+        return new $882b6d93070905b3$export$74e446f6456d826d(`${componentId}-${segment1}-${segment2}-${segment3}-${collectionId}`);
     }
 }
-module.exports.uuid = $882b6d93070905b3$var$uuid;
 
 
 //# sourceMappingURL=main.js.map
